@@ -115,19 +115,19 @@ and</li><li>any ambient state obtained from the <code>context</code> using
     <section class="summary source-code" id="source">
       <h2><span>Implementation</span> </h2>
       <pre class="language-dart"><code class="language-dart">@override
-Widget build(BuildContext context)
-{
-  return new KeyboardAvoider(animated: this.animated, child:
-  new LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-    return new SingleChildScrollView(child:
-    new ConstrainedBox(
-        constraints: new BoxConstraints(
-          minHeight: constraints.maxHeight,
-        ),
-        child: this.child
-    ),
-    );
-  }),
+Widget build(BuildContext context) {
+  return new KeyboardAvoider(
+    animated: this.animated,
+    child: new LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return new SingleChildScrollView(
+        child: new ConstrainedBox(
+            constraints: new BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: this.child),
+      );
+    }),
   );
 }</code></pre>
     </section>
