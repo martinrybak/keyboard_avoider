@@ -1,8 +1,8 @@
 name: keyboard_avoider
-description: A new Flutter package project.
+description: Flutter widgets for avoiding the on-screen keyboard.
 version: 0.0.1
-author:
-homepage:
+author: Martin Rybak <martin.rybak@gmail.com>
+homepage: https://github.com/vgventures/keyboard-avoider
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
