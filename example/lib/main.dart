@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:keyboard_avoider/keyboard_avoider.dart';
-import 'placeholder_field.dart';
+import 'package:keyboard_avoider/keyboard_scrollview.dart';
+import 'package:keyboard_avoider/ensure_visible.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget
+{
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        home: new KeyboardAvoider(child: new PlaceholderField()));
+      home: new KeyboardScrollView(
+        child: new Column(
+          children: List.generate(20, (index) {
+            return new Material(
+              child: new EnsureVisible(
+                builder: (context, focusNode) {
+                  return new TextFormField(
+                    initialValue: 'index = $index',
+                    focusNode: focusNode,
+                  );
+                }
+              )
+            );
+          })
+        )
+      )
+    );
   }
 }
