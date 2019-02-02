@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:keyboard_avoider/keyboard_scrollview.dart';
-import 'package:keyboard_avoider/ensure_visible.dart';
 
 void main() => runApp(MyApp());
 

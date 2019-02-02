@@ -65,51 +65,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> {
     //Check if keyboard overlaps widget
     double overlap = max(0.0, widgetRect.bottom - keyboardTop);
     if (overlap != _overlap) {
-      _findFocusedRenderObject(context.findRenderObject());
       setState(() => _overlap = overlap);
     }
-  }
-
-  void _findFocusedRenderObject(RenderObject parent)
-  {
-    parent.visitChildren((child){
-      if (child is RenderEditable && child.hasFocus) {
-        _scrollToFocusedRenderObject(child);
-        return;
-      }
-      _findFocusedRenderObject(child);
-    });
-  }
-
-  _scrollToFocusedRenderObject(RenderObject object)
-  {
-    final RenderAbstractViewport viewport = RenderAbstractViewport.of(object);
-    assert(viewport != null);
-
-    // Get the Scrollable state (in order to retrieve its offset)
-    ScrollableState scrollableState = Scrollable.of(context);
-    assert(scrollableState != null);
-
-    // Get its offset
-    ScrollPosition position = scrollableState.position;
-    double alignment;
-
-    if (position.pixels > viewport.getOffsetToReveal(object, 0.0).offset) {
-      // Move down to the top of the viewport
-      alignment = 0.0;
-    } else if (position.pixels < viewport.getOffsetToReveal(object, 1.0).offset) {
-      // Move up to the bottom of the viewport
-      alignment = 1.0;
-    } else {
-      // No scrolling is necessary to reveal the child
-      return;
-    }
-
-    position.ensureVisible(
-        object,
-        alignment: alignment,
-        duration: this.widget.duration,
-//        curve: this.widget.curve
-    );
   }
 }
