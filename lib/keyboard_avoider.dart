@@ -8,21 +8,25 @@ import 'package:flutter/rendering.dart';
 /// Wraps the [child] in a [Container] or [AnimatedContainer], based on [animated],
 /// that adjusts its bottom [padding] to accommodate the on-screen keyboard.
 class KeyboardAvoider extends StatefulWidget {
-  /// The child contained by the widget
+  /// The child to embed.
   final Widget child;
 
-  // Whether to animate the transition
+  // Whether to animate the transition.
   final bool animated;
 
   /// Duration of the resize animation if [animated] is true. Defaults to 100ms.
   final Duration duration;
 
+  /// Animation curve. Defaults to [easeInOut]
+  final Curve curve;
+
   KeyboardAvoider(
-      {Key key,
-      @required this.child,
-      this.animated: true,
-      this.duration = const Duration(milliseconds: 100)})
-      : super(key: key);
+    {Key key,
+    @required this.child,
+    this.animated: true,
+    this.duration = const Duration(milliseconds: 100),
+    this.curve = Curves.easeInOut
+  }) : super(key: key);
 
   _KeyboardAvoiderState createState() => new _KeyboardAvoiderState();
 }
@@ -37,16 +41,17 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> {
       _resize();
     });
 
-    if (this.widget.animated) {
+    if (widget.animated) {
       return new AnimatedContainer(
           padding: new EdgeInsets.only(bottom: _overlap),
-          duration: this.widget.duration,
-          child: this.widget.child);
+          duration: widget.duration,
+          curve: widget.curve,
+          child: widget.child);
     }
 
     return new Container(
         padding: new EdgeInsets.only(bottom: _overlap),
-        child: this.widget.child);
+        child: widget.child);
   }
 
   void _resize() {

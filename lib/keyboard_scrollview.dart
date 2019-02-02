@@ -1,22 +1,27 @@
 library keyboard_avoider;
 
 import 'dart:ui';
+import 'dart:collection';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'keyboard_avoider.dart';
 
-/// Embeds the [child] in a [SingleChildScrollView]
-/// and wraps with a [KeyboardAvoider].
+/// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoider].
+/// If the [child] contains a focused widget, it will auto-scroll so that it is visible
+/// in the viewport according to the given [alignment].
 class KeyboardScrollView extends StatefulWidget
 {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
 
-  // Whether to animate the transition
+  // Whether to animate the transition.
   final bool animated;
 
-  /// Duration of the resize animation if [animated] is true. Defaults to 100ms.
+  /// Duration of the animations if [animated] is true. Defaults to 100ms.
   final Duration duration;
+
+  /// Animation curve. Defaults to [easeInOut].
+  final Curve curve;
 
   /// How to align the focused widget. 0 is top, 1 is bottom. Defaults to 0.5.
   final double alignment;
@@ -26,6 +31,7 @@ class KeyboardScrollView extends StatefulWidget
     @required this.child,
     this.animated = true,
     this.duration = const Duration(milliseconds: 100),
+    this.curve = Curves.easeInOut,
     this.alignment = 0.5
 }) : assert(!(child is Scrollable)),
      assert(alignment >= 0 && alignment <= 1),
@@ -59,6 +65,7 @@ class _KeyboardScrollViewState extends State<KeyboardScrollView> with WidgetsBin
     return new KeyboardAvoider(
       animated: widget.animated,
       duration: widget.duration,
+      curve: widget.curve,
       child: new LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return new SingleChildScrollView(
@@ -84,37 +91,46 @@ class _KeyboardScrollViewState extends State<KeyboardScrollView> with WidgetsBin
       return;
     }
 
-    //Wait for keyboard animation to finish showing
+    //Wait for keyboard to finish showing
     new Future.delayed(const Duration(milliseconds: 300)).then((_){
-      _autoScroll();
+      _scrollToFocused();
     });
   }
 
   /// Private
 
-  void _autoScroll()
+  void _scrollToFocused()
   {
-    _findFocusedRenderObject(context.findRenderObject());
+    var focused = _findFocusedObject(context.findRenderObject());
+    if (focused != null) {
+      _scrollToObject(focused);
+    }
   }
 
-  //TODO: replace with breadth-first search
-  void _findFocusedRenderObject(RenderObject parent)
+  /// Finds the first focused [RenderEditable] child of [root] using a breadth-first search.
+  RenderObject _findFocusedObject(RenderObject root)
   {
-    parent.visitChildren((child){
-      if (child is RenderEditable && child.hasFocus) {
-        _scrollToFocusedRenderObject(child);
-        return;
+    var q = new Queue<RenderObject>();
+    q.add(root);
+    while (q.isNotEmpty) {
+      var node = q.removeFirst();
+      if (node is RenderEditable && node.hasFocus) {
+        return node;
       }
-      _findFocusedRenderObject(child);
-    });
+      node.visitChildren((child){
+        q.add(child);
+      });
+    }
+    return null;
   }
 
-  _scrollToFocusedRenderObject(RenderObject object)
+  _scrollToObject(RenderObject object)
   {
     _scrollController.position.ensureVisible(
       object,
       alignment: widget.alignment,
       duration: widget.duration,
+      curve: widget.curve
     );
   }
 }
