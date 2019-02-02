@@ -7,7 +7,8 @@ import 'package:flutter/rendering.dart';
 
 /// Wraps the [child] in a [Container] or [AnimatedContainer], based on [animated],
 /// that adjusts its bottom [padding] to accommodate the on-screen keyboard.
-class KeyboardAvoider extends StatefulWidget {
+class KeyboardAvoider extends StatefulWidget
+{
   /// The child to embed.
   final Widget child;
 
@@ -31,11 +32,13 @@ class KeyboardAvoider extends StatefulWidget {
   _KeyboardAvoiderState createState() => new _KeyboardAvoiderState();
 }
 
-class _KeyboardAvoiderState extends State<KeyboardAvoider> {
+class _KeyboardAvoiderState extends State<KeyboardAvoider>
+{
   double _overlap = 0.0;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     //Execute after build() so that we can call context.findRenderObject();
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _resize();
@@ -43,23 +46,25 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> {
 
     if (widget.animated) {
       return new AnimatedContainer(
-          padding: new EdgeInsets.only(bottom: _overlap),
-          duration: widget.duration,
-          curve: widget.curve,
-          child: widget.child);
+        padding: new EdgeInsets.only(bottom: _overlap),
+        duration: widget.duration,
+        curve: widget.curve,
+        child: widget.child
+      );
     }
 
     return new Container(
-        padding: new EdgeInsets.only(bottom: _overlap),
-        child: widget.child);
+      padding: new EdgeInsets.only(bottom: _overlap),
+      child: widget.child
+    );
   }
 
-  void _resize() {
+  void _resize()
+  {
     //Calculate Rect of widget on screen
     RenderBox box = context.findRenderObject();
     Offset offset = box.localToGlobal(Offset.zero);
-    Rect widgetRect = new Rect.fromLTWH(
-        offset.dx, offset.dy, box.size.width, box.size.height);
+    Rect widgetRect = new Rect.fromLTWH(offset.dx, offset.dy, box.size.width, box.size.height);
 
     //Calculate top of keyboard
     MediaQueryData mediaQuery = MediaQuery.of(context);
