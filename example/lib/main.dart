@@ -13,13 +13,8 @@ class MyApp extends StatelessWidget
         child: new KeyboardScrollView(
           child: new Column(
             children: List.generate(20, (index) {
-              return new EnsureVisible(
-                builder: (context, focusNode) {
-                  return new TextFormField(
-                    initialValue: 'index = $index',
-                    focusNode: focusNode,
-                  );
-                }
+              return new TextFormField(
+                initialValue: 'index = $index'
               );
             })
           )
