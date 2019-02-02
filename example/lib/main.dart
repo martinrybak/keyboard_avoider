@@ -9,20 +9,20 @@ class MyApp extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: new KeyboardScrollView(
-        child: new Column(
-          children: List.generate(20, (index) {
-            return new Material(
-              child: new EnsureVisible(
+      home: new Material(
+        child: new KeyboardScrollView(
+          child: new Column(
+            children: List.generate(20, (index) {
+              return new EnsureVisible(
                 builder: (context, focusNode) {
                   return new TextFormField(
                     initialValue: 'index = $index',
                     focusNode: focusNode,
                   );
                 }
-              )
-            );
-          })
+              );
+            })
+          )
         )
       )
     );
