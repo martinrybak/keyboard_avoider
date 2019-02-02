@@ -1,10 +1,10 @@
 .DS_Store
-.dart_tool/
-
+.atom/
+.idea
 .packages
 .pub/
-
 build/
 ios/.generated/
-ios/Flutter/Generated.xcconfig
-ios/Runner/GeneratedPluginRegistrant.*
+packages
+pubspec.lock
+.flutter-plugins
