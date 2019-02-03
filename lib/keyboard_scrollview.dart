@@ -1,6 +1,5 @@
 library keyboard_avoider;
 
-import 'dart:ui';
 import 'dart:collection';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
@@ -13,17 +12,21 @@ class KeyboardScrollView extends StatefulWidget {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
 
-  // Whether to animate the transition.
+  /// Whether to animate the [KeyboardAvoider].
   final bool animated;
 
-  /// Duration of the animations if [animated] is true. Defaults to 100ms.
+  /// Duration of the [KeyboardAvoider] animation and focus animation. Defaults to 100ms.
   final Duration duration;
 
-  /// Animation curve. Defaults to [easeInOut].
+  /// Curve for the [KeyboardAvoider] animation and focus animation. Defaults to [easeInOut].
   final Curve curve;
 
-  /// How to align the focused widget. 0 is top, 1 is bottom. Defaults to 0.5.
+  /// How to align the focused widget in the viewport. 0 is top, 1 is bottom. Defaults to 0.5.
   final double alignment;
+
+  /// How long to wait after the keyboard starts appearing before auto-scrolling to the focused widget.
+  /// This value can't be too low or the auto-scroll won't work. Default is 300ms.
+  final Duration focusDelay;
 
   KeyboardScrollView({
     Key key,
@@ -32,6 +35,7 @@ class KeyboardScrollView extends StatefulWidget {
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
     this.alignment = 0.5,
+    this.focusDelay = const Duration(milliseconds: 300),
   })  : assert(!(child is Scrollable)),
         assert(alignment >= 0 && alignment <= 1),
         super(key: key);
@@ -80,13 +84,7 @@ class _KeyboardScrollViewState extends State<KeyboardScrollView>
 
   @override
   void didChangeMetrics() {
-    //Keyboard closing, do nothing
-    if (window.viewInsets.bottom == 0) {
-      return;
-    }
-
-    //Wait for keyboard to finish showing
-    new Future.delayed(const Duration(milliseconds: 300)).then((_) {
+    new Future.delayed(widget.focusDelay).then((_) {
       _scrollToFocusedObject();
     });
   }
