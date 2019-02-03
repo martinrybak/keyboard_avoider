@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/rendering.dart';
 
 /// Wraps the [child] in a [Container] or [AnimatedContainer], based on [animated],
@@ -67,7 +66,7 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
   @override
   void didChangeMetrics() {
     //Need to wait a frame to get the new size
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _resize();
     });
   }
