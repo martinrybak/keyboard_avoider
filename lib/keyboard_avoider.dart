@@ -31,16 +31,24 @@ class KeyboardAvoider extends StatefulWidget {
   _KeyboardAvoiderState createState() => new _KeyboardAvoiderState();
 }
 
-class _KeyboardAvoiderState extends State<KeyboardAvoider> {
+class _KeyboardAvoiderState extends State<KeyboardAvoider>
+    with WidgetsBindingObserver {
   double _overlap = 0.0;
 
   @override
-  Widget build(BuildContext context) {
-    //Execute after build() so that we can call context.findRenderObject();
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _resize();
-    });
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     if (widget.animated) {
       return new AnimatedContainer(
         padding: new EdgeInsets.only(bottom: _overlap),
@@ -55,6 +63,18 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> {
       child: widget.child,
     );
   }
+
+  /// WidgetsBindingObserver
+
+  @override
+  void didChangeMetrics() {
+    //Need to wait a frame to get the new size
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _resize();
+    });
+  }
+
+  //Private
 
   void _resize() {
     //Calculate Rect of widget on screen
