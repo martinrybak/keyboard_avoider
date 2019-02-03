@@ -3,8 +3,7 @@ import 'package:keyboard_avoider/keyboard_scrollview.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget
-{
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -12,13 +11,11 @@ class MyApp extends StatelessWidget
         child: new KeyboardScrollView(
           child: new Column(
             children: List.generate(20, (index) {
-              return new TextFormField(
-                initialValue: 'index = $index'
-              );
-            })
-          )
-        )
-      )
+              return new TextFormField(initialValue: 'index = $index');
+            }),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -7,10 +7,9 @@ import 'package:flutter/rendering.dart';
 import 'keyboard_avoider.dart';
 
 /// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoider].
-/// If the [child] contains a focused widget, it will auto-scroll so that it is visible
-/// in the viewport according to the given [alignment].
-class KeyboardScrollView extends StatefulWidget
-{
+/// If the [child] contains a focused widget such as a [TextField] that becomes active,
+/// it will auto-scroll so that it is visible in the viewport according to the given [alignment].
+class KeyboardScrollView extends StatefulWidget {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
 
@@ -32,75 +31,69 @@ class KeyboardScrollView extends StatefulWidget
     this.animated = true,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
-    this.alignment = 0.5
-}) : assert(!(child is Scrollable)),
-     assert(alignment >= 0 && alignment <= 1),
-     super(key: key);
+    this.alignment = 0.5,
+  })  : assert(!(child is Scrollable)),
+        assert(alignment >= 0 && alignment <= 1),
+        super(key: key);
 
   @override
   _KeyboardScrollViewState createState() => _KeyboardScrollViewState();
 }
 
-class _KeyboardScrollViewState extends State<KeyboardScrollView> with WidgetsBindingObserver
-{
+class _KeyboardScrollViewState extends State<KeyboardScrollView>
+    with WidgetsBindingObserver {
   final ScrollController _scrollController = new ScrollController();
 
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
-  void dispose()
-  {
+  void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return new KeyboardAvoider(
       animated: widget.animated,
       duration: widget.duration,
       curve: widget.curve,
-      child: new LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return new SingleChildScrollView(
-            controller: _scrollController,
-            child: new ConstrainedBox(
-              constraints: new BoxConstraints(
-                minHeight: constraints.maxHeight,
-              ),
-              child: widget.child
+      child: new LayoutBuilder(builder: (context, constraints) {
+        return new SingleChildScrollView(
+          controller: _scrollController,
+          child: new ConstrainedBox(
+            constraints: new BoxConstraints(
+              minHeight: constraints.maxHeight,
             ),
-          );
-        }
-      ),
+            child: widget.child,
+          ),
+        );
+      }),
     );
   }
 
   /// WidgetsBindingObserver
 
-  @override void didChangeMetrics()
-  {
+  @override
+  void didChangeMetrics() {
     //Keyboard closing, do nothing
     if (window.viewInsets.bottom == 0) {
       return;
     }
 
     //Wait for keyboard to finish showing
-    new Future.delayed(const Duration(milliseconds: 300)).then((_){
-      _scrollToFocused();
+    new Future.delayed(const Duration(milliseconds: 300)).then((_) {
+      _scrollToFocusedObject();
     });
   }
 
   /// Private
 
-  void _scrollToFocused()
-  {
+  void _scrollToFocusedObject() {
     var focused = _findFocusedObject(context.findRenderObject());
     if (focused != null) {
       _scrollToObject(focused);
@@ -108,8 +101,7 @@ class _KeyboardScrollViewState extends State<KeyboardScrollView> with WidgetsBin
   }
 
   /// Finds the first focused [RenderEditable] child of [root] using a breadth-first search.
-  RenderObject _findFocusedObject(RenderObject root)
-  {
+  RenderObject _findFocusedObject(RenderObject root) {
     var q = new Queue<RenderObject>();
     q.add(root);
     while (q.isNotEmpty) {
@@ -117,20 +109,19 @@ class _KeyboardScrollViewState extends State<KeyboardScrollView> with WidgetsBin
       if (node is RenderEditable && node.hasFocus) {
         return node;
       }
-      node.visitChildren((child){
+      node.visitChildren((child) {
         q.add(child);
       });
     }
     return null;
   }
 
-  _scrollToObject(RenderObject object)
-  {
+  _scrollToObject(RenderObject object) {
     _scrollController.position.ensureVisible(
       object,
       alignment: widget.alignment,
       duration: widget.duration,
-      curve: widget.curve
+      curve: widget.curve,
     );
   }
 }
