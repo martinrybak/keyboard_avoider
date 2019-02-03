@@ -1,5 +1,3 @@
-library keyboard_avoider;
-
 import 'dart:math';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/scheduler.dart';
@@ -28,10 +26,10 @@ class KeyboardAvoidingContainer extends StatefulWidget {
     this.curve = Curves.easeInOut,
   }) : super(key: key);
 
-  _KeyboardAvoiderState createState() => new _KeyboardAvoiderState();
+  _KeyboardAvoidingContainerState createState() => new _KeyboardAvoidingContainerState();
 }
 
-class _ extends State<KeyboardAvoider>
+class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     with WidgetsBindingObserver {
   double _overlap = 0.0;
 
