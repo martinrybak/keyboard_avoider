@@ -1,14 +1,12 @@
-library keyboard_avoider;
-
 import 'dart:collection';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
-import 'keyboard_avoider.dart';
+import 'keyboard_avoiding_container.dart';
 
 /// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoider].
 /// If the [child] contains a focused widget such as a [TextField] that becomes active,
 /// it will auto-scroll so that it is visible in the viewport according to the given [alignment].
-class KeyboardScrollView extends StatefulWidget {
+class KeyboardAvoidingScrollView extends StatefulWidget {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
 
@@ -28,7 +26,7 @@ class KeyboardScrollView extends StatefulWidget {
   /// This value can't be too low or the auto-scroll won't work. Default is 300ms.
   final Duration focusDelay;
 
-  KeyboardScrollView({
+  KeyboardAvoidingScrollView({
     Key key,
     @required this.child,
     this.animated = true,
@@ -41,10 +39,10 @@ class KeyboardScrollView extends StatefulWidget {
         super(key: key);
 
   @override
-  _KeyboardScrollViewState createState() => _KeyboardScrollViewState();
+  _KeyboardAvoidingScrollViewState createState() => _KeyboardAvoidingScrollViewState();
 }
 
-class _KeyboardScrollViewState extends State<KeyboardScrollView>
+class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     with WidgetsBindingObserver {
   final ScrollController _scrollController = new ScrollController();
 
@@ -62,7 +60,7 @@ class _KeyboardScrollViewState extends State<KeyboardScrollView>
 
   @override
   Widget build(BuildContext context) {
-    return new KeyboardAvoider(
+    return new KeyboardAvoidingContainer(
       animated: widget.animated,
       duration: widget.duration,
       curve: widget.curve,
