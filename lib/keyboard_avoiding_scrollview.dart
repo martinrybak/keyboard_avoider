@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'keyboard_avoiding_container.dart';
 
-/// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoider].
+/// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoidingContainer].
 /// If the [child] contains a focused widget such as a [TextField] that becomes active,
 /// it will auto-scroll so that it is visible in the viewport according to the given [alignment].
 class KeyboardAvoidingScrollView extends StatefulWidget {
