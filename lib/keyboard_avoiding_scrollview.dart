@@ -10,13 +10,13 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
 
-  /// Whether to animate the [KeyboardAvoider].
+  /// Whether to animate the [KeyboardAvoidingContainer].
   final bool animated;
 
-  /// Duration of the [KeyboardAvoider] animation and focus animation. Defaults to 100ms.
+  /// Duration of the [KeyboardAvoidingContainer] animation and focus animation. Defaults to 100ms.
   final Duration duration;
 
-  /// Curve for the [KeyboardAvoider] animation and focus animation. Defaults to [easeInOut].
+  /// Curve for the [KeyboardAvoidingContainer] animation and focus animation. Defaults to [easeInOut].
   final Curve curve;
 
   /// How to align the focused widget in the viewport. 0 is top, 1 is bottom. Defaults to 0.5.
