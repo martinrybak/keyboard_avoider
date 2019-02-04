@@ -23,7 +23,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
   final double alignment;
 
   /// How long to wait after the keyboard starts appearing before auto-scrolling to the focused widget.
-  /// This value can't be too low or the auto-scroll won't work. Default is 300ms.
+  /// This value can't be too low or the auto-scroll won't work. Default is 300ms. Min is 200ms.
   final Duration focusDelay;
 
   KeyboardAvoidingScrollView({
@@ -36,6 +36,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
     this.focusDelay = const Duration(milliseconds: 300),
   })  : assert(!(child is Scrollable)),
         assert(alignment >= 0 && alignment <= 1),
+        assert(focusDelay > const Duration(milliseconds: 200), "Can't be too low or the auto-scroll won't work."),
         super(key: key);
 
   @override
