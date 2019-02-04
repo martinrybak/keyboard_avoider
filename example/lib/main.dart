@@ -6,12 +6,12 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Material(
-        child: new KeyboardAvoidingScrollView(
-          child: new Column(
+    return MaterialApp(
+      home: Material(
+        child: KeyboardAvoidingScrollView(
+          child: Column(
             children: List.generate(20, (index) {
-              return new TextFormField(initialValue: 'index = $index');
+              return TextFormField(initialValue: 'index = $index');
             }),
           ),
         ),

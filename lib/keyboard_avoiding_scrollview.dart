@@ -44,7 +44,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
 
 class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     with WidgetsBindingObserver {
-  final ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -60,15 +60,15 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
 
   @override
   Widget build(BuildContext context) {
-    return new KeyboardAvoidingContainer(
+    return KeyboardAvoidingContainer(
       animated: widget.animated,
       duration: widget.duration,
       curve: widget.curve,
-      child: new LayoutBuilder(builder: (context, constraints) {
-        return new SingleChildScrollView(
+      child: LayoutBuilder(builder: (context, constraints) {
+        return SingleChildScrollView(
           controller: _scrollController,
-          child: new ConstrainedBox(
-            constraints: new BoxConstraints(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
             child: widget.child,
@@ -82,7 +82,7 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
 
   @override
   void didChangeMetrics() {
-    new Future.delayed(widget.focusDelay).then((_) {
+    Future.delayed(widget.focusDelay).then((_) {
       _scrollToFocusedObject();
     });
   }
@@ -98,7 +98,7 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
 
   /// Finds the first focused [RenderEditable] child of [root] using a breadth-first search.
   RenderObject _findFocusedObject(RenderObject root) {
-    var q = new Queue<RenderObject>();
+    var q = Queue<RenderObject>();
     q.add(root);
     while (q.isNotEmpty) {
       var node = q.removeFirst();

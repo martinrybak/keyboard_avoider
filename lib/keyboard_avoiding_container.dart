@@ -25,7 +25,7 @@ class KeyboardAvoidingContainer extends StatefulWidget {
     this.curve = Curves.easeInOut,
   }) : super(key: key);
 
-  _KeyboardAvoidingContainerState createState() => new _KeyboardAvoidingContainerState();
+  _KeyboardAvoidingContainerState createState() => _KeyboardAvoidingContainerState();
 }
 
 class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
@@ -47,16 +47,16 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
   @override
   Widget build(BuildContext context) {
     if (widget.animated) {
-      return new AnimatedContainer(
-        padding: new EdgeInsets.only(bottom: _overlap),
+      return AnimatedContainer(
+        padding: EdgeInsets.only(bottom: _overlap),
         duration: widget.duration,
         curve: widget.curve,
         child: widget.child,
       );
     }
 
-    return new Container(
-      padding: new EdgeInsets.only(bottom: _overlap),
+    return Container(
+      padding: EdgeInsets.only(bottom: _overlap),
       child: widget.child,
     );
   }
@@ -77,7 +77,7 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     //Calculate Rect of widget on screen
     RenderBox box = context.findRenderObject();
     Offset offset = box.localToGlobal(Offset.zero);
-    Rect widgetRect = new Rect.fromLTWH(
+    Rect widgetRect = Rect.fromLTWH(
       offset.dx,
       offset.dy,
       box.size.width,
