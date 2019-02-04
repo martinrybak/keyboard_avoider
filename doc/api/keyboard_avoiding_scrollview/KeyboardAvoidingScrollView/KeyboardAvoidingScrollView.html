@@ -96,6 +96,7 @@
   this.focusDelay = const Duration(milliseconds: 300),
 })  : assert(!(child is Scrollable)),
       assert(alignment &gt;= 0 &amp;&amp; alignment &lt;= 1),
+      assert(focusDelay &gt; const Duration(milliseconds: 200), &quot;Can&#39;t be too low or the auto-scroll won&#39;t work.&quot;),
       super(key: key);</code></pre>
     </section>
 
