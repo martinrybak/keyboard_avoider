@@ -19,8 +19,8 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
   /// Curve for the [KeyboardAvoidingContainer] animation and focus animation. Defaults to [easeInOut].
   final Curve curve;
 
-  /// How to align the focused widget in the viewport. 0 is top, 1 is bottom. Defaults to 0.5.
-  final double alignment;
+  /// Space to put between the focused widget and the top of the keyboard.
+  final double padding;
 
   /// How long to wait after the keyboard starts appearing before auto-scrolling to the focused widget.
   /// This value can't be too low or the auto-scroll won't work. Default is 300ms. Min is 200ms.
@@ -32,15 +32,16 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
     this.animated = true,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
-    this.alignment = 0.5,
+    this.padding = 12.0,
     this.focusDelay = const Duration(milliseconds: 300),
   })  : assert(!(child is Scrollable)),
-        assert(alignment >= 0 && alignment <= 1),
-        assert(focusDelay > const Duration(milliseconds: 200), "Can't be too low or the auto-scroll won't work."),
+        assert(focusDelay > const Duration(milliseconds: 200),
+            "Can't be too low or the auto-scroll won't work."),
         super(key: key);
 
   @override
-  _KeyboardAvoidingScrollViewState createState() => _KeyboardAvoidingScrollViewState();
+  _KeyboardAvoidingScrollViewState createState() =>
+      _KeyboardAvoidingScrollViewState();
 }
 
 class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
@@ -113,12 +114,34 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     return null;
   }
 
+  /// If the focused object is covered by the keyboard, scroll to it.
+  /// Otherwise do nothing.
   _scrollToObject(RenderObject object) {
-    _scrollController.position.ensureVisible(
-      object,
-      alignment: widget.alignment,
-      duration: widget.duration,
-      curve: widget.curve,
+    //Calculate Rect of object in scrollview
+    var box = object as RenderBox;
+    var viewport = RenderAbstractViewport.of(object);
+    var offset = box.localToGlobal(Offset.zero, ancestor: viewport);
+    var rect = Rect.fromLTWH(
+      offset.dx,
+      offset.dy,
+      box.size.width,
+      box.size.height,
     );
+
+    //Calculate the top and bottom of the visible viewport
+    var position = _scrollController.position;
+    var viewportTop = position.pixels;
+    var viewportBottom = viewportTop + position.viewportDimension;
+
+    //If the object bottom is covered by the keyboard, scroll to it
+    //so that its bottom touches the top of the keyboard.
+    if (rect.bottom > viewportBottom) {
+      var newOffset = rect.bottom - position.viewportDimension + widget.padding;
+      _scrollController.animateTo(
+        newOffset,
+        duration: widget.duration,
+        curve: widget.curve,
+      );
+    }
   }
 }
