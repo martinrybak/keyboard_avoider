@@ -55,8 +55,8 @@
 
     <section class="desc markdown">
       <p>Embeds the <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/child.html">child</a> in a <code>SingleChildScrollView</code> wrapped with a <a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html">KeyboardAvoidingContainer</a>.
-If the <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/child.html">child</a> contains a focused widget such as a <code>TextField</code> that becomes active,
-it will auto-scroll so that it is visible in the viewport according to the given <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/alignment.html">alignment</a>.</p>
+If the <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/child.html">child</a> contains a focused widget such as a <code>TextField</code>, it will auto-scroll so that
+that it is just visible above the keyboard, plus any additional <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/bottomPadding.html">bottomPadding</a>.</p>
     </section>
     
 
@@ -65,7 +65,7 @@ it will auto-scroll so that it is visible in the viewport according to the given
 
       <dl class="constructor-summary-list">
         <dt id="KeyboardAvoidingScrollView" class="callable">
-          <span class="name"><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/KeyboardAvoidingScrollView.html">KeyboardAvoidingScrollView</a></span><span class="signature">({<span class="parameter" id="-param-key"><span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="-param-child"><span>@required</span> <span class="type-annotation">Widget</span> <span class="parameter-name">child</span>, </span> <span class="parameter" id="-param-animated"><span class="type-annotation">bool</span> <span class="parameter-name">animated</span>: <span class="default-value">true</span>, </span> <span class="parameter" id="-param-duration"><span class="type-annotation">Duration</span> <span class="parameter-name">duration</span>: <span class="default-value">const Duration(milliseconds: 100)</span>, </span> <span class="parameter" id="-param-curve"><span class="type-annotation">Curve</span> <span class="parameter-name">curve</span>: <span class="default-value">Curves.easeInOut</span>, </span> <span class="parameter" id="-param-alignment"><span class="type-annotation">double</span> <span class="parameter-name">alignment</span>: <span class="default-value">0.5</span>, </span> <span class="parameter" id="-param-focusDelay"><span class="type-annotation">Duration</span> <span class="parameter-name">focusDelay</span>: <span class="default-value">const Duration(milliseconds: 300)</span></span> })</span>
+          <span class="name"><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/KeyboardAvoidingScrollView.html">KeyboardAvoidingScrollView</a></span><span class="signature">({<span class="parameter" id="-param-key"><span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="-param-child"><span>@required</span> <span class="type-annotation">Widget</span> <span class="parameter-name">child</span>, </span> <span class="parameter" id="-param-animated"><span class="type-annotation">bool</span> <span class="parameter-name">animated</span>: <span class="default-value">true</span>, </span> <span class="parameter" id="-param-duration"><span class="type-annotation">Duration</span> <span class="parameter-name">duration</span>: <span class="default-value">const Duration(milliseconds: 100)</span>, </span> <span class="parameter" id="-param-curve"><span class="type-annotation">Curve</span> <span class="parameter-name">curve</span>: <span class="default-value">Curves.easeInOut</span>, </span> <span class="parameter" id="-param-bottomPadding"><span class="type-annotation">double</span> <span class="parameter-name">bottomPadding</span>: <span class="default-value">12.0</span>, </span> <span class="parameter" id="-param-focusDelay"><span class="type-annotation">Duration</span> <span class="parameter-name">focusDelay</span>: <span class="default-value">const Duration(milliseconds: 300)</span></span> })</span>
         </dt>
         <dd>
           
@@ -77,20 +77,21 @@ it will auto-scroll so that it is visible in the viewport according to the given
       <h2>Properties</h2>
 
       <dl class="properties">
-        <dt id="alignment" class="property">
-          <span class="name"><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/alignment.html">alignment</a></span>
-          <span class="signature">&#8594; double</span> 
-        </dt>
-        <dd>
-          How to align the focused widget in the viewport. 0 is top, 1 is bottom. Defaults to 0.5.
-          <div class="features">final</div>
-</dd>
         <dt id="animated" class="property">
           <span class="name"><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/animated.html">animated</a></span>
           <span class="signature">&#8594; bool</span> 
         </dt>
         <dd>
           Whether to animate the <a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html">KeyboardAvoidingContainer</a>.
+          <div class="features">final</div>
+</dd>
+        <dt id="bottomPadding" class="property">
+          <span class="name"><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/bottomPadding.html">bottomPadding</a></span>
+          <span class="signature">&#8594; double</span> 
+        </dt>
+        <dd>
+          Space to put between the focused widget and the top of the keyboard.
+Useful in case the focused widget is inside a container that you also want to be visible.
           <div class="features">final</div>
 </dd>
         <dt id="child" class="property">
@@ -279,8 +280,8 @@ tools and by <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/to
       <li class="section-title">
         <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView-class.html#instance-properties">Properties</a>
       </li>
-      <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/alignment.html">alignment</a></li>
       <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/animated.html">animated</a></li>
+      <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/bottomPadding.html">bottomPadding</a></li>
       <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/child.html">child</a></li>
       <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/curve.html">curve</a></li>
       <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/duration.html">duration</a></li>
