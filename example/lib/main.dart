@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       home: Material(
         child: KeyboardAvoidingScrollView(
           child: Column(
-            children: List.generate(20, (index) {
+            children: List.generate(40, (index) {
               return TextFormField(initialValue: 'index = $index');
             }),
           ),
