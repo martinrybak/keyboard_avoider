@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'keyboard_avoiding_container.dart';
 
 /// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoidingContainer].
-/// If the [child] contains a focused widget such as a [TextField] that becomes active,
-/// it will auto-scroll so that it is visible in the viewport according to the given [alignment].
+/// If the [child] contains a focused widget such as a [TextField], it will auto-scroll so that
+/// that it is just visible above the keyboard, plus any additional [bottomPadding].
 class KeyboardAvoidingScrollView extends StatefulWidget {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
@@ -20,7 +20,8 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
   final Curve curve;
 
   /// Space to put between the focused widget and the top of the keyboard.
-  final double padding;
+  /// Useful in case the focused widget is inside a container that you also want to be visible.
+  final double bottomPadding;
 
   /// How long to wait after the keyboard starts appearing before auto-scrolling to the focused widget.
   /// This value can't be too low or the auto-scroll won't work. Default is 300ms. Min is 200ms.
@@ -32,7 +33,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
     this.animated = true,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
-    this.padding = 12.0,
+    this.bottomPadding = 12.0,
     this.focusDelay = const Duration(milliseconds: 300),
   })  : assert(!(child is Scrollable)),
         assert(focusDelay > const Duration(milliseconds: 200),
@@ -134,9 +135,9 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     var viewportBottom = viewportTop + position.viewportDimension;
 
     //If the object bottom is covered by the keyboard, scroll to it
-    //so that its bottom touches the top of the keyboard.
+    //so that its bottom touches the top of the keyboard, plus any padding.
     if (rect.bottom > viewportBottom) {
-      var newOffset = rect.bottom - position.viewportDimension + widget.padding;
+      var newOffset = rect.bottom - position.viewportDimension + widget.bottomPadding;
       _scrollController.animateTo(
         newOffset,
         duration: widget.duration,
