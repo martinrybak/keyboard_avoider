@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="API docs for the toDiagnosticsNode method from the KeyboardAvoidingContainer class, for the Dart programming language.">
-  <title>toDiagnosticsNode method - KeyboardAvoidingContainer class - keyboard_avoiding_container library - Dart API</title>
+  <meta name="description" content="API docs for the onKeyboardShown property from the KeyboardAvoidingContainer class, for the Dart programming language.">
+  <title>onKeyboardShown property - KeyboardAvoidingContainer class - keyboard_avoiding_container library - Dart API</title>
   <!-- required because all the links are pseudo-absolute -->
   <base href="../..">
 
@@ -26,9 +26,9 @@
     <li><a href="index.html">keyboard_avoider</a></li>
     <li><a href="keyboard_avoiding_container/keyboard_avoiding_container-library.html">keyboard_avoiding_container</a></li>
     <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html">KeyboardAvoidingContainer</a></li>
-    <li class="self-crumb">toDiagnosticsNode method</li>
+    <li class="self-crumb">onKeyboardShown property</li>
   </ol>
-  <div class="self-name">toDiagnosticsNode</div>
+  <div class="self-name">onKeyboardShown</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -75,40 +75,22 @@
   </div><!--/.sidebar-offcanvas-->
 
   <div class="col-xs-12 col-sm-9 col-md-8 main-content">
-    <h1>toDiagnosticsNode method</h1>
+    <h1>onKeyboardShown property</h1>
 
-    <section class="multi-line-signature">
-      <div>
-        <ol class="annotation-list">
-          <li>@override</li>
-        </ol>
-      </div>
-      <span class="returntype">DiagnosticsNode</span>
-      <span class="name ">toDiagnosticsNode</span>
-(<wbr>{<span class="parameter" id="toDiagnosticsNode-param-name"><span class="type-annotation">String</span> <span class="parameter-name">name</span>, </span> <span class="parameter" id="toDiagnosticsNode-param-style"><span class="type-annotation">DiagnosticsTreeStyle</span> <span class="parameter-name">style</span></span> })
-      <div class="features">inherited</div>
-    </section>
-    <section class="desc markdown">
-      <p>Returns a debug representation of the object that is used by debugging
-tools and by <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/toStringDeep.html">toStringDeep</a>.</p>
-<p>Leave <code>name</code> as null if there is not a meaningful description of the
-relationship between the this node and its parent.</p>
-<p>Typically the <code>style</code> argument is only specified to indicate an atypical
-relationship between the parent and the node. For example, pass
-<code>DiagnosticsTreeStyle.offstage</code> to indicate that a node is offstage.</p>
-    </section>
-    
-    <section class="summary source-code" id="source">
-      <h2><span>Implementation</span> </h2>
-      <pre class="language-dart"><code class="language-dart">@override
-DiagnosticsNode toDiagnosticsNode({ String name, DiagnosticsTreeStyle style }) {
-  return _DiagnosticableTreeNode(
-    name: name,
-    value: this,
-    style: style,
-  );
-}</code></pre>
-    </section>
+        <section class="multi-line-signature">
+          <span class="returntype">Function</span>
+          <span class="name ">onKeyboardShown</span>
+          <div class="features">final</div>
+        </section>
+        <section class="desc markdown">
+          <p>Callback invoked when the <code>AnimatedContainer</code> animation completes after the keyboard is shown.</p>
+        </section>
+                <section class="summary source-code" id="source">
+          <h2><span>Implementation</span> </h2>
+          <pre class="language-dart"><code class="language-dart">final Function onKeyboardShown
+
+</code></pre>
+        </section>
 
   </div> <!-- /.main-content -->
 

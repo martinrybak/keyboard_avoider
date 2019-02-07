@@ -54,8 +54,8 @@
       <h1>KeyboardAvoidingContainer class </h1>
 
     <section class="desc markdown">
-      <p>Wraps the <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/child.html">child</a> in a <code>Container</code> or <code>AnimatedContainer</code>, based on <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/animated.html">animated</a>,
-that adjusts its bottom <code>padding</code> to accommodate the on-screen keyboard.</p>
+      <p>Wraps the <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/child.html">child</a> in a <code>AnimatedContainer</code> that adjusts its bottom <code>padding</code>
+to accommodate the on-screen keyboard. To disable the animation, set <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/duration.html">duration</a> to <code>Duration.zero</code>.</p>
     </section>
     
 
@@ -64,7 +64,7 @@ that adjusts its bottom <code>padding</code> to accommodate the on-screen keyboa
 
       <dl class="constructor-summary-list">
         <dt id="KeyboardAvoidingContainer" class="callable">
-          <span class="name"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/KeyboardAvoidingContainer.html">KeyboardAvoidingContainer</a></span><span class="signature">({<span class="parameter" id="-param-key"><span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="-param-child"><span>@required</span> <span class="type-annotation">Widget</span> <span class="parameter-name">child</span>, </span> <span class="parameter" id="-param-animated"><span class="type-annotation">bool</span> <span class="parameter-name">animated</span>: <span class="default-value">true</span>, </span> <span class="parameter" id="-param-duration"><span class="type-annotation">Duration</span> <span class="parameter-name">duration</span>: <span class="default-value">const Duration(milliseconds: 100)</span>, </span> <span class="parameter" id="-param-curve"><span class="type-annotation">Curve</span> <span class="parameter-name">curve</span>: <span class="default-value">Curves.easeInOut</span></span> })</span>
+          <span class="name"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/KeyboardAvoidingContainer.html">KeyboardAvoidingContainer</a></span><span class="signature">({<span class="parameter" id="-param-key"><span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="-param-child"><span>@required</span> <span class="type-annotation">Widget</span> <span class="parameter-name">child</span>, </span> <span class="parameter" id="-param-duration"><span class="type-annotation">Duration</span> <span class="parameter-name">duration</span>: <span class="default-value">const Duration(milliseconds: 100)</span>, </span> <span class="parameter" id="-param-curve"><span class="type-annotation">Curve</span> <span class="parameter-name">curve</span>: <span class="default-value">Curves.easeOut</span>, </span> <span class="parameter" id="-param-onKeyboardShown"><span class="type-annotation">Function</span> <span class="parameter-name">onKeyboardShown</span>, </span> <span class="parameter" id="-param-onKeyboardHidden"><span class="type-annotation">Function</span> <span class="parameter-name">onKeyboardHidden</span></span> })</span>
         </dt>
         <dd>
           
@@ -76,14 +76,6 @@ that adjusts its bottom <code>padding</code> to accommodate the on-screen keyboa
       <h2>Properties</h2>
 
       <dl class="properties">
-        <dt id="animated" class="property">
-          <span class="name"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/animated.html">animated</a></span>
-          <span class="signature">&#8594; bool</span> 
-        </dt>
-        <dd>
-          
-          <div class="features">final</div>
-</dd>
         <dt id="child" class="property">
           <span class="name"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/child.html">child</a></span>
           <span class="signature">&#8594; Widget</span> 
@@ -97,7 +89,7 @@ that adjusts its bottom <code>padding</code> to accommodate the on-screen keyboa
           <span class="signature">&#8594; Curve</span> 
         </dt>
         <dd>
-          Animation curve. Defaults to <code>easeInOut</code>
+          Animation curve. Defaults to <code>easeOut</code>
           <div class="features">final</div>
 </dd>
         <dt id="duration" class="property">
@@ -105,7 +97,23 @@ that adjusts its bottom <code>padding</code> to accommodate the on-screen keyboa
           <span class="signature">&#8594; Duration</span> 
         </dt>
         <dd>
-          Duration of the resize animation if <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/animated.html">animated</a> is true. Defaults to 100ms.
+          Duration of the resize animation. Defaults to 100ms.
+          <div class="features">final</div>
+</dd>
+        <dt id="onKeyboardHidden" class="property">
+          <span class="name"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/onKeyboardHidden.html">onKeyboardHidden</a></span>
+          <span class="signature">&#8594; Function</span> 
+        </dt>
+        <dd>
+          Callback invoked when the <code>AnimatedContainer</code> animation completes after the keyboard is hidden.
+          <div class="features">final</div>
+</dd>
+        <dt id="onKeyboardShown" class="property">
+          <span class="name"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/onKeyboardShown.html">onKeyboardShown</a></span>
+          <span class="signature">&#8594; Function</span> 
+        </dt>
+        <dd>
+          Callback invoked when the <code>AnimatedContainer</code> animation completes after the keyboard is shown.
           <div class="features">final</div>
 </dd>
         <dt id="hashCode" class="property inherited">
@@ -261,10 +269,11 @@ tools and by <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/to
       <li class="section-title">
         <a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html#instance-properties">Properties</a>
       </li>
-      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/animated.html">animated</a></li>
       <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/child.html">child</a></li>
       <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/curve.html">curve</a></li>
       <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/duration.html">duration</a></li>
+      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/onKeyboardHidden.html">onKeyboardHidden</a></li>
+      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/onKeyboardShown.html">onKeyboardShown</a></li>
       <li class="inherited"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/key.html">key</a></li>
       <li class="inherited"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/runtimeType.html">runtimeType</a></li>

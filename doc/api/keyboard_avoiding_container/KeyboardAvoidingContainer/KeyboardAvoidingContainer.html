@@ -45,10 +45,11 @@
       <li class="section-title">
         <a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html#instance-properties">Properties</a>
       </li>
-      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/animated.html">animated</a></li>
       <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/child.html">child</a></li>
       <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/curve.html">curve</a></li>
       <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/duration.html">duration</a></li>
+      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/onKeyboardHidden.html">onKeyboardHidden</a></li>
+      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/onKeyboardShown.html">onKeyboardShown</a></li>
       <li class="inherited"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/hashCode.html">hashCode</a></li>
       <li class="inherited"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/key.html">key</a></li>
       <li class="inherited"><a href="keyboard_avoiding_container/KeyboardAvoidingContainer/runtimeType.html">runtimeType</a></li>
@@ -78,7 +79,7 @@
 
     <section class="multi-line-signature">
       
-      <span class="name ">KeyboardAvoidingContainer</span>(<wbr>{<span class="parameter" id="-param-key"><span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="-param-child"><span>@required</span> <span class="type-annotation">Widget</span> <span class="parameter-name">child</span>, </span> <span class="parameter" id="-param-animated"><span class="type-annotation">bool</span> <span class="parameter-name">animated</span>: <span class="default-value">true</span>, </span> <span class="parameter" id="-param-duration"><span class="type-annotation">Duration</span> <span class="parameter-name">duration</span>: <span class="default-value">const Duration(milliseconds: 100)</span>, </span> <span class="parameter" id="-param-curve"><span class="type-annotation">Curve</span> <span class="parameter-name">curve</span>: <span class="default-value">Curves.easeInOut</span></span> })
+      <span class="name ">KeyboardAvoidingContainer</span>(<wbr>{<span class="parameter" id="-param-key"><span class="type-annotation">Key</span> <span class="parameter-name">key</span>, </span> <span class="parameter" id="-param-child"><span>@required</span> <span class="type-annotation">Widget</span> <span class="parameter-name">child</span>, </span> <span class="parameter" id="-param-duration"><span class="type-annotation">Duration</span> <span class="parameter-name">duration</span>: <span class="default-value">const Duration(milliseconds: 100)</span>, </span> <span class="parameter" id="-param-curve"><span class="type-annotation">Curve</span> <span class="parameter-name">curve</span>: <span class="default-value">Curves.easeOut</span>, </span> <span class="parameter" id="-param-onKeyboardShown"><span class="type-annotation">Function</span> <span class="parameter-name">onKeyboardShown</span>, </span> <span class="parameter" id="-param-onKeyboardHidden"><span class="type-annotation">Function</span> <span class="parameter-name">onKeyboardHidden</span></span> })
     </section>
 
     
@@ -87,9 +88,10 @@
       <pre class="language-dart"><code class="language-dart">KeyboardAvoidingContainer({
   Key key,
   @required this.child,
-  this.animated: true,
   this.duration = const Duration(milliseconds: 100),
-  this.curve = Curves.easeInOut,
+  this.curve = Curves.easeOut,
+  this.onKeyboardShown,
+  this.onKeyboardHidden,
 }) : super(key: key);</code></pre>
     </section>
 
