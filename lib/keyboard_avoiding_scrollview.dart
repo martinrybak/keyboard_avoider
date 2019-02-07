@@ -5,7 +5,7 @@ import 'keyboard_avoiding_container.dart';
 
 /// Embeds the [child] in a [SingleChildScrollView] wrapped with a [KeyboardAvoidingContainer].
 /// If the [child] contains a focused widget such as a [TextField], it will auto-scroll so that
-/// it is just visible above the keyboard, plus any additional [bottomPadding].
+/// it is just visible above the keyboard, plus any additional [focusPadding].
 class KeyboardAvoidingScrollView extends StatefulWidget {
   /// The child to embed. Must not be a [Scrollable].
   final Widget child;
@@ -18,14 +18,14 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
 
   /// Space to put between the focused widget and the top of the keyboard. Defaults to 12.
   /// Useful in case the focused widget is inside a parent widget that you also want to be visible.
-  final double bottomPadding;
+  final double focusPadding;
 
   KeyboardAvoidingScrollView({
     Key key,
     @required this.child,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeOut,
-    this.bottomPadding = 12.0,
+    this.focusPadding = 12.0,
   })  : assert(!(child is Scrollable)),
         super(key: key);
 
@@ -111,7 +111,7 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     //If the object bottom is covered by the keyboard, scroll to it
     //so that its bottom touches the top of the keyboard, plus any padding.
     if (rect.bottom > viewportBottom) {
-      final newOffset = rect.bottom - position.viewportDimension + widget.bottomPadding;
+      final newOffset = rect.bottom - position.viewportDimension + widget.focusPadding;
       _scrollController.animateTo(
         newOffset,
         duration: widget.duration,
