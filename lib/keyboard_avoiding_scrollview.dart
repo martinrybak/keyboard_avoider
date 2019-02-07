@@ -64,7 +64,6 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
   @override
   Widget build(BuildContext context) {
     return KeyboardAvoidingContainer(
-      animated: widget.animated,
       duration: widget.duration,
       curve: widget.curve,
       child: LayoutBuilder(builder: (context, constraints) {

@@ -2,16 +2,13 @@ import 'dart:math';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 
-/// Wraps the [child] in a [Container] or [AnimatedContainer], based on [animated],
-/// that adjusts its bottom [padding] to accommodate the on-screen keyboard.
+/// Wraps the [child] in a [AnimatedContainer] that adjusts its bottom [padding]
+/// to accommodate the on-screen keyboard. To disable the animation, set [duration] to zero.
 class KeyboardAvoidingContainer extends StatefulWidget {
   /// The child to embed.
   final Widget child;
 
-  // Whether to animate the transition.
-  final bool animated;
-
-  /// Duration of the resize animation if [animated] is true. Defaults to 100ms.
+  /// Duration of the resize animation. Defaults to 100ms.
   final Duration duration;
 
   /// Animation curve. Defaults to [easeInOut]
@@ -20,7 +17,6 @@ class KeyboardAvoidingContainer extends StatefulWidget {
   KeyboardAvoidingContainer({
     Key key,
     @required this.child,
-    this.animated: true,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
   }) : super(key: key);
@@ -30,6 +26,8 @@ class KeyboardAvoidingContainer extends StatefulWidget {
 
 class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     with WidgetsBindingObserver {
+  final GlobalKey<ImplicitlyAnimatedWidgetState> _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
+  Function(AnimationStatus) _animationListener;
   double _overlap = 0.0;
 
   @override
@@ -41,22 +39,26 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _animationKey.currentState.animation.removeStatusListener(_animationListener);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.animated) {
-      return AnimatedContainer(
-        padding: EdgeInsets.only(bottom: _overlap),
-        duration: widget.duration,
-        curve: widget.curve,
-        child: widget.child,
-      );
-    }
+    //Add a status listener to the animation. This has to be done post-build so that _animationKey.currentState is not null.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //Don't add a status listener after every build, just once
+      if (_animationListener == null) {
+        _animationListener = _animationStatusChanged;
+        _animationKey.currentState.animation.addStatusListener(_animationListener);
+      }
+    });
 
-    return Container(
+    return AnimatedContainer(
+      key: _animationKey,
       padding: EdgeInsets.only(bottom: _overlap),
+      duration: widget.duration,
+      curve: widget.curve,
       child: widget.child,
     );
   }
@@ -69,6 +71,20 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _resize();
     });
+  }
+
+  /// Animation status
+
+  void _animationStatusChanged(AnimationStatus status)
+  {
+    if (status == AnimationStatus.completed) {
+      var keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+      if (keyboardVisible) {
+        print ("keyboard shown");
+      } else {
+        print ("keyboard hidden");
+      }
+    }
   }
 
   //Private
