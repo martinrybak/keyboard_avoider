@@ -14,19 +14,28 @@ class KeyboardAvoidingContainer extends StatefulWidget {
   /// Animation curve. Defaults to [easeInOut]
   final Curve curve;
 
+  /// Callback invoked when the [AnimatedContainer] animation completes and the keyboard is visible.
+  final Function onKeyboardShown;
+
+  /// Callback invoked when the [AnimatedContainer] animation completes and the keyboard is hidden.
+  final Function onKeyboardHidden;
+
   KeyboardAvoidingContainer({
     Key key,
     @required this.child,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
+    this.onKeyboardShown,
+    this.onKeyboardHidden,
   }) : super(key: key);
 
-  _KeyboardAvoidingContainerState createState() => _KeyboardAvoidingContainerState();
+  _KeyboardAvoidingContainerState createState() =>
+      _KeyboardAvoidingContainerState();
 }
 
 class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     with WidgetsBindingObserver {
-  final GlobalKey<ImplicitlyAnimatedWidgetState> _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
+  final _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
   Function(AnimationStatus) _animationListener;
   double _overlap = 0.0;
 
@@ -39,7 +48,8 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _animationKey.currentState.animation.removeStatusListener(_animationListener);
+    _animationKey.currentState.animation
+        .removeStatusListener(_animationListener);
     super.dispose();
   }
 
@@ -50,7 +60,8 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
       //Don't add a status listener after every build, just once
       if (_animationListener == null) {
         _animationListener = _animationStatusChanged;
-        _animationKey.currentState.animation.addStatusListener(_animationListener);
+        _animationKey.currentState.animation
+            .addStatusListener(_animationListener);
       }
     });
 
@@ -75,14 +86,13 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
 
   /// Animation status
 
-  void _animationStatusChanged(AnimationStatus status)
-  {
+  void _animationStatusChanged(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
       var keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
       if (keyboardVisible) {
-        print ("keyboard shown");
+        widget.onKeyboardShown?.call();
       } else {
-        print ("keyboard hidden");
+        widget.onKeyboardHidden?.call();
       }
     }
   }
