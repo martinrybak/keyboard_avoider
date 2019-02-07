@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 
 /// Wraps the [child] in a [AnimatedContainer] that adjusts its bottom [padding]
-/// to accommodate the on-screen keyboard. To disable the animation, set [duration] to zero.
+/// to accommodate the on-screen keyboard. To disable the animation, set [duration] to [Duration.zero].
 class KeyboardAvoidingContainer extends StatefulWidget {
   /// The child to embed.
   final Widget child;
