@@ -97,7 +97,7 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     }
   }
 
-  //Private
+  /// Private
 
   void _resize() {
     //Calculate Rect of widget on screen
