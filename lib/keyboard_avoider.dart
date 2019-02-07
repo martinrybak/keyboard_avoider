@@ -9,6 +9,7 @@ import 'package:flutter/rendering.dart';
 /// it is just visible above the keyboard, plus any additional [focusPadding].
 class KeyboardAvoider extends StatefulWidget {
   /// The child to embed. If the [child] is not a [ScrollView], it is automatically embedded in a [SingleChildScrollView].
+  /// If the [child] is a [ScrollView], it must have a [ScrollController].
   final Widget child;
 
   /// Duration of the resize animation. Defaults to 100ms. To disable, set to [Duration.zero].
@@ -27,7 +28,8 @@ class KeyboardAvoider extends StatefulWidget {
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeOut,
     this.focusPadding = 12.0,
-  }) : super(key: key);
+  })  : assert(child is ScrollView ? child.controller != null : true),
+        super(key: key);
 
   _KeyboardAvoiderState createState() => _KeyboardAvoiderState();
 }
