@@ -16,7 +16,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
   /// Duration of the [KeyboardAvoidingContainer] animation and auto-scroll animation. Defaults to 100ms.
   final Duration duration;
 
-  /// Curve for the [KeyboardAvoidingContainer] animation and auto-scroll animation. Defaults to [easeInOut].
+  /// Curve for the [KeyboardAvoidingContainer] animation and auto-scroll animation. Defaults to [easeOut].
   final Curve curve;
 
   /// Space to put between the focused widget and the top of the keyboard.
@@ -28,7 +28,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
     @required this.child,
     this.animated = true,
     this.duration = const Duration(milliseconds: 100),
-    this.curve = Curves.easeInOut,
+    this.curve = Curves.easeOut,
     this.bottomPadding = 12.0,
   })  : assert(!(child is Scrollable)),
         super(key: key);
@@ -71,7 +71,7 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
   }
 
   void _scrollToFocusedObject() {
-    var focused = _findFocusedObject(context.findRenderObject());
+    final focused = _findFocusedObject(context.findRenderObject());
     if (focused != null) {
       _scrollToObject(focused);
     }
@@ -79,10 +79,10 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
 
   /// Finds the first focused [RenderEditable] child of [root] using a breadth-first search.
   RenderObject _findFocusedObject(RenderObject root) {
-    var q = Queue<RenderObject>();
+    final q = Queue<RenderObject>();
     q.add(root);
     while (q.isNotEmpty) {
-      var node = q.removeFirst();
+      final node = q.removeFirst();
       if (node is RenderEditable && node.hasFocus) {
         return node;
       }
@@ -97,10 +97,10 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
   /// Otherwise do nothing.
   _scrollToObject(RenderObject object) {
     //Calculate Rect of object in scrollview
-    var box = object as RenderBox;
-    var viewport = RenderAbstractViewport.of(object);
-    var offset = box.localToGlobal(Offset.zero, ancestor: viewport);
-    var rect = Rect.fromLTWH(
+    final box = object as RenderBox;
+    final viewport = RenderAbstractViewport.of(object);
+    final offset = box.localToGlobal(Offset.zero, ancestor: viewport);
+    final rect = Rect.fromLTWH(
       offset.dx,
       offset.dy,
       box.size.width,
@@ -108,14 +108,14 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     );
 
     //Calculate the top and bottom of the visible viewport
-    var position = _scrollController.position;
-    var viewportTop = position.pixels;
-    var viewportBottom = viewportTop + position.viewportDimension;
+    final position = _scrollController.position;
+    final viewportTop = position.pixels;
+    final viewportBottom = viewportTop + position.viewportDimension;
 
     //If the object bottom is covered by the keyboard, scroll to it
     //so that its bottom touches the top of the keyboard, plus any padding.
     if (rect.bottom > viewportBottom) {
-      var newOffset = rect.bottom - position.viewportDimension + widget.bottomPadding;
+      final newOffset = rect.bottom - position.viewportDimension + widget.bottomPadding;
       _scrollController.animateTo(
         newOffset,
         duration: widget.duration,

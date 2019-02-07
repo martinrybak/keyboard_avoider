@@ -11,20 +11,20 @@ class KeyboardAvoidingContainer extends StatefulWidget {
   /// Duration of the resize animation. Defaults to 100ms.
   final Duration duration;
 
-  /// Animation curve. Defaults to [easeInOut]
+  /// Animation curve. Defaults to [easeOut]
   final Curve curve;
 
-  /// Callback invoked when the [AnimatedContainer] animation completes and the keyboard is visible.
+  /// Callback invoked when the [AnimatedContainer] animation completes after the keyboard is shown.
   final Function onKeyboardShown;
 
-  /// Callback invoked when the [AnimatedContainer] animation completes and the keyboard is hidden.
+  /// Callback invoked when the [AnimatedContainer] animation completes after the keyboard is hidden.
   final Function onKeyboardHidden;
 
   KeyboardAvoidingContainer({
     Key key,
     @required this.child,
     this.duration = const Duration(milliseconds: 100),
-    this.curve = Curves.easeInOut,
+    this.curve = Curves.easeOut,
     this.onKeyboardShown,
     this.onKeyboardHidden,
   }) : super(key: key);
@@ -88,7 +88,7 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
 
   void _animationStatusChanged(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
-      var keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+      final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
       if (keyboardVisible) {
         widget.onKeyboardShown?.call();
       } else {
@@ -101,9 +101,10 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
 
   void _resize() {
     //Calculate Rect of widget on screen
-    RenderBox box = context.findRenderObject();
-    Offset offset = box.localToGlobal(Offset.zero);
-    Rect widgetRect = Rect.fromLTWH(
+    final object = context.findRenderObject();
+    final box = object as RenderBox;
+    final offset = box.localToGlobal(Offset.zero);
+    final widgetRect = Rect.fromLTWH(
       offset.dx,
       offset.dy,
       box.size.width,
@@ -111,13 +112,13 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     );
 
     //Calculate top of keyboard
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    Size screenSize = mediaQuery.size;
-    EdgeInsets screenInsets = mediaQuery.viewInsets;
-    double keyboardTop = screenSize.height - screenInsets.bottom;
+    final mediaQuery = MediaQuery.of(context);
+    final screenSize = mediaQuery.size;
+    final screenInsets = mediaQuery.viewInsets;
+    final keyboardTop = screenSize.height - screenInsets.bottom;
 
     //Check if keyboard overlaps widget
-    double overlap = max(0.0, widgetRect.bottom - keyboardTop);
+    final overlap = max(0.0, widgetRect.bottom - keyboardTop);
     if (overlap != _overlap) {
       setState(() => _overlap = overlap);
     }
