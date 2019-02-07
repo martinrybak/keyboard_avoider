@@ -13,19 +13,15 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
   /// Whether to animate the [KeyboardAvoidingContainer].
   final bool animated;
 
-  /// Duration of the [KeyboardAvoidingContainer] animation and focus animation. Defaults to 100ms.
+  /// Duration of the [KeyboardAvoidingContainer] animation and auto-scroll animation. Defaults to 100ms.
   final Duration duration;
 
-  /// Curve for the [KeyboardAvoidingContainer] animation and focus animation. Defaults to [easeInOut].
+  /// Curve for the [KeyboardAvoidingContainer] animation and auto-scroll animation. Defaults to [easeInOut].
   final Curve curve;
 
   /// Space to put between the focused widget and the top of the keyboard.
   /// Useful in case the focused widget is inside a container that you also want to be visible.
   final double bottomPadding;
-
-  /// How long to wait after the keyboard starts appearing before auto-scrolling to the focused widget.
-  /// This value can't be too low or the auto-scroll won't work. Default is 300ms. Min is 200ms.
-  final Duration focusDelay;
 
   KeyboardAvoidingScrollView({
     Key key,
@@ -34,10 +30,7 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeInOut,
     this.bottomPadding = 12.0,
-    this.focusDelay = const Duration(milliseconds: 300),
   })  : assert(!(child is Scrollable)),
-        assert(focusDelay > const Duration(milliseconds: 200),
-            "Can't be too low or the auto-scroll won't work."),
         super(key: key);
 
   @override
@@ -45,27 +38,15 @@ class KeyboardAvoidingScrollView extends StatefulWidget {
       _KeyboardAvoidingScrollViewState();
 }
 
-class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
-    with WidgetsBindingObserver {
+class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView> {
   final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return KeyboardAvoidingContainer(
       duration: widget.duration,
       curve: widget.curve,
+      onKeyboardShown: _keyboardShown,
       child: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
           controller: _scrollController,
@@ -80,16 +61,14 @@ class _KeyboardAvoidingScrollViewState extends State<KeyboardAvoidingScrollView>
     );
   }
 
-  /// WidgetsBindingObserver
+  /// Private
 
-  @override
-  void didChangeMetrics() {
-    Future.delayed(widget.focusDelay).then((_) {
+  void _keyboardShown() {
+    //Need to wait a frame to get the new size
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollToFocusedObject();
     });
   }
-
-  /// Private
 
   void _scrollToFocusedObject() {
     var focused = _findFocusedObject(context.findRenderObject());
