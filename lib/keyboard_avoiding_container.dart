@@ -120,7 +120,9 @@ class _KeyboardAvoidingContainerState extends State<KeyboardAvoidingContainer>
     //Check if keyboard overlaps widget
     final overlap = max(0.0, widgetRect.bottom - keyboardTop);
     if (overlap != _overlap) {
-      setState(() => _overlap = overlap);
+      setState(() {
+        _overlap = overlap;
+      });
     }
   }
 }
