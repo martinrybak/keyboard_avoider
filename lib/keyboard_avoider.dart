@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 
 /// Wraps the [child] in a [AnimatedContainer] that adjusts its [padding] to accommodate the on-screen keyboard.
-/// If the [child] is not a [ScrollView], first embeds the child in a [SingleChildScrollView].
+/// Unlike a [Scaffold], it only insets by the actual amount overlapped by the keyboard.
+/// If the [child] is not a [ScrollView], it first embeds the child in a [SingleChildScrollView].
 /// If the [child] contains a focused widget such as a [TextField], it will auto-scroll so that
 /// it is just visible above the keyboard, plus any additional [focusPadding].
 class KeyboardAvoider extends StatefulWidget {
@@ -71,8 +72,8 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider>
     // If [child] is a [ScrollView], grab its [ScrollController]
     // and just embed the [child] directly in an [AnimatedContainer].
     if (widget.child is ScrollView) {
-      var scrollable = widget.child as ScrollView;
-      _scrollController = scrollable.controller;
+      var scrollView = widget.child as ScrollView;
+      _scrollController = scrollView.controller;
       return _buildAnimatedContainer(widget.child);
     }
 
@@ -195,7 +196,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider>
     // If the object is covered by the keyboard, scroll to reveal it,
     // and add [focusPadding] between it and top of the keyboard.
     if (offset > _scrollController.position.pixels) {
-      _scrollController.animateTo(
+      _scrollController.position.moveTo(
         offset,
         duration: widget.duration,
         curve: widget.curve,
