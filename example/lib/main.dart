@@ -59,6 +59,8 @@ class MyApp extends StatelessWidget {
 
   Widget _buildList() {
     return ListView.builder(
+      padding: EdgeInsets.zero,
+      controller: new ScrollController(),
       itemCount: 40,
       itemBuilder: (context, index) {
         return TextFormField(initialValue: 'TextFormField ${index + 1}');
