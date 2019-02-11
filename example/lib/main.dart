@@ -8,102 +8,66 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: SafeArea(
-          child: Material(
-//          child: _buildScaffold(),
-        child: _buildExample(),
-      )),
-    );
-  }
-
-  Widget _buildScaffold() {
-    return Scaffold(
-      resizeToAvoidBottomPadding: true,
-      floatingActionButton: _buildFab(),
-      body: Column(
-        children: <Widget>[
-          _buildTextField(),
-          Expanded(
-            child: _buildList(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildExample() {
-    return Column(
-      children: <Widget>[
-//        _buildTextField(),
-        Expanded(
-          child: Stack(
+        child: Material(
+          child: Row(
             children: <Widget>[
-              Positioned(bottom: 20, right: 20, child: _buildFab()),
-              KeyboardAvoider(
-//                child: _buildList(),
-                child: _buildColumn()
+              Flexible(
+                flex: 1,
+                child: Column(
+                  children: <Widget>[
+                    Flexible(flex: 2, child: _buildPlaceholder(Colors.red)),
+                    Flexible(flex: 1, child: _buildPlaceholder(Colors.pink)),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 2,
+                child: Column(
+                  children: <Widget>[
+                    Flexible(flex: 2, child: _buildForm(Colors.green)),
+                    Flexible(flex: 1, child: _buildPlaceholder(Colors.lightGreen),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Column(
+                  children: <Widget>[
+                    Flexible(flex: 1, child: _buildPlaceholder(Colors.blue),),
+                    Flexible(flex: 2, child: _buildPlaceholder(Colors.lightBlue)),
+                  ],
+                ),
               ),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 
-  Widget _buildColumn() {
-    return Column(
-      children: List.generate(40, (index) {
-        return TextFormField(initialValue: 'TextFormField ${index + 1}');
-      }),
-    );
-  }
-
-  Widget _buildList() {
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      controller: new ScrollController(),
-      itemCount: 40,
-      itemBuilder: (context, index) {
-        return TextFormField(initialValue: 'TextFormField ${index + 1}');
-//        return ListTile(
-//          leading: Icon(IconData(index + 10000)),
-//          title: Text('ListTile ${index + 1}'),
-//        );
-      },
-    );
-  }
-
-  Widget _buildFab() {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildTextField() {
+  Widget _buildForm(Color color)
+  {
     return Container(
-      margin: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(.5),
-        borderRadius: BorderRadius.all(const Radius.circular(8.0)),
+      color: color,
+      child: KeyboardAvoider(
+        autoFocus: true,
+        child: Column(
+          children: List.generate(40, (index) {
+            return TextFormField(initialValue: 'TextFormField ${index + 1}');
+          }),
+        ),
       ),
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Icon(Icons.search),
-          ),
-          Flexible(
-            child: TextField(
-              autocorrect: false,
-              maxLines: 1,
-              decoration: InputDecoration(
-                hintText: "Search",
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ],
-      ),
+    );
+  }
+
+  Widget _buildPlaceholder(Color color)
+  {
+    return Container(
+      color: color,
+      child: KeyboardAvoider(
+        child: Placeholder(),
+      )
     );
   }
 }
