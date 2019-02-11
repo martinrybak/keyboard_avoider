@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             flex: 1,
             child: Column(
               children: <Widget>[
-                Flexible(flex: 1, child: _buildPlaceholder(Colors.blue),),
+                Flexible(flex: 1, child: _buildPlaceholder(Colors.blue)),
                 Flexible(flex: 2, child: _buildPlaceholder(Colors.lightBlue)),
               ],
             ),
@@ -42,8 +42,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _buildForm(int rows, Color color)
-  {
+  Widget _buildForm(int rows, Color color) {
     return Container(
       color: color,
       child: KeyboardAvoider(
@@ -56,25 +55,21 @@ class MyApp extends StatelessWidget {
             return Material(
               child: TextFormField(
                 initialValue: 'TextFormField ${index + 1}',
-                decoration: InputDecoration(
-                  fillColor: color,
-                  filled: true
+                decoration: InputDecoration(fillColor: color, filled: true),
               ),
-              )
             );
           },
-        )
+        ),
       ),
     );
   }
 
-  Widget _buildPlaceholder(Color color)
-  {
+  Widget _buildPlaceholder(Color color) {
     return Container(
       color: color,
       child: KeyboardAvoider(
         child: Placeholder(),
-      )
+      ),
     );
   }
 }
