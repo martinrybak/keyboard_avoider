@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 /// Wraps the [child] in a [AnimatedContainer] that adjusts its [padding] to accommodate the on-screen keyboard.
 /// Unlike a [Scaffold], it only insets by the actual amount obscured by the keyboard.
 /// If [autoFocus] is true and the [child] contains a focused widget such as a [TextField],
-/// it will auto scroll so that it is just visible above the keyboard, plus any additional [focusPadding].
+/// automatically scrolls so that it is just visible above the keyboard, plus any additional [focusPadding].
 class KeyboardAvoider extends StatefulWidget {
   /// The child to embed. If the [child] is not a [ScrollView], it is automatically embedded in a [SingleChildScrollView].
   /// If the [child] is a [ScrollView], it must have a [ScrollController].
@@ -40,9 +40,9 @@ class KeyboardAvoider extends StatefulWidget {
 }
 
 class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingObserver {
-  ScrollController _scrollController;
   final _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
   Function(AnimationStatus) _animationListener;
+  ScrollController _scrollController;
   double _overlap = 0.0;
 
   @override
@@ -78,7 +78,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
       return _buildAnimatedContainer(widget.child);
     }
 
-    // If child is not a [ScrollView], and [autoFocus] is true,
+    // If [child] is not a [ScrollView], and [autoFocus] is true,
     // embed the [child] in a [SingleChildScrollView] to make
     // it possible to scroll to the focused widget.
     if (widget.autoFocus) {
@@ -158,7 +158,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
       return;
     }
 
-    // If widget is partially obscured by the keyboard, resize to fully expose
+    // If widget is partially obscured by the keyboard, resize to fully expose it
     final overlap = max(0.0, widgetRect.bottom - keyboardTop);
     if (overlap != _overlap) {
       setState(() {
