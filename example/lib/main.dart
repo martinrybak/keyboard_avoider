@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
       child: KeyboardAvoider(
         autoScroll: true,
         child: ListView.builder(
+          padding: EdgeInsets.zero,
           controller: ScrollController(),
           itemCount: rows,
           itemBuilder: (context, index) {

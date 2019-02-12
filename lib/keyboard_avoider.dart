@@ -60,15 +60,14 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    // Add a status listener to the animation.
-    // This must be done post-build so that _animationKey.currentState is not null.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      //Add the status listener just once
-      if (_animationListener == null) {
+    // Add a status listener to the animation after the initial build.
+    // Wait a frame so that _animationKey.currentState is not null.
+    if (_animationListener == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         _animationListener = _animationStatusChanged;
         _animationKey.currentState.animation.addStatusListener(_animationListener);
-      }
-    });
+      });
+    }
 
     // If [child] is a [ScrollView], get its [ScrollController]
     // and embed the [child] directly in an [AnimatedContainer].
@@ -158,7 +157,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
       return;
     }
 
-    // If widget is partially obscured by the keyboard, resize to fully expose it
+    // If widget is partially obscured by the keyboard, adjust bottom padding to fully expose it
     final overlap = max(0.0, widgetRect.bottom - keyboardTop);
     if (overlap != _overlap) {
       setState(() {
