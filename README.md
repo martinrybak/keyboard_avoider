@@ -2,6 +2,8 @@
 
 A lightweight alternative to the `Scaffold` widget for avoiding the on-screen software keyboard. Automatically scrolls `TextField` child widgets into view on focus.
 
+![](keyboard_avoider.gif)
+
 ## Example
 
 ```
