@@ -4,20 +4,26 @@ A lightweight alternative to the `Scaffold` widget for avoiding the on-screen so
 
 ![](keyboard_avoider.gif)
 
+In the video above, every colored area is embedded in its own `KeyboardAvoider`.
+
 ## Example
 
 ```
-@override
-Widget build(BuildContext context) {
-  return KeyboardAvoider(
-    child: Placeholder(),
-  );
+import 'package:keyboard_avoider/keyboard_avoider.dart';
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return KeyboardAvoider(
+      child: Placeholder(),
+    );
+  }
 }
 ```
 
 ## Why not use a Scaffold?
 
-The `Scaffold` widget expects to be a full-screen widget. If the `resizeToAvoidBottomPadding` property is set to `true` (which is the default), it will adjust its bottom `padding` by the full height of the on-screen keyboard when it appears. In contrast, the `KeyboardAvoider` widget only insets its bottom `padding` by the actual amount obscured by the keyboard. This is especially useful when using tablet devices.
+The `Scaffold` widget expects to be a full-screen widget. If the `resizeToAvoidBottomPadding` property is set to `true` (which is the default), it will adjust its bottom `padding` by the full height of the on-screen keyboard when it appears. In contrast, the `KeyboardAvoider` widget only insets its bottom `padding` by the actual amount obscured by the keyboard. This is especially useful when working with complex layouts on tablet devices.
 
 ## Auto Scroll
 

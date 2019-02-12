@@ -44,16 +44,21 @@
         <h1 id="keyboard_avoider">keyboard_avoider</h1>
 <p>A lightweight alternative to the <code>Scaffold</code> widget for avoiding the on-screen software keyboard. Automatically scrolls obscured <code>TextField</code> child widgets into view on focus.</p>
 <p><img alt="" src="../../keyboard_avoider.gif"></p>
+<p>In the video above, every colored area is embedded in its own <code>KeyboardAvoider</code>.</p>
 <h2 id="example">Example</h2>
-<pre class="language-dart"><code>@override
-Widget build(BuildContext context) {
-  return KeyboardAvoider(
-    child: Placeholder(),
-  );
+<pre class="language-dart"><code>import 'package:keyboard_avoider/keyboard_avoider.dart';
+
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return KeyboardAvoider(
+      child: Placeholder(),
+    );
+  }
 }
 </code></pre>
 <h2 id="why-not-use-a-scaffold">Why not use a Scaffold?</h2>
-<p>The <code>Scaffold</code> widget expects to be a full-screen widget. If the <code>resizeToAvoidBottomPadding</code> property is set to <code>true</code> (which is the default), it will adjust its bottom <code>padding</code> by the full height of the on-screen keyboard when it appears. In contrast, the <code>KeyboardAvoider</code> widget only insets its bottom <code>padding</code> by the actual amount obscured by the keyboard. This is especially useful when using tablet devices.</p>
+<p>The <code>Scaffold</code> widget expects to be a full-screen widget. If the <code>resizeToAvoidBottomPadding</code> property is set to <code>true</code> (which is the default), it will adjust its bottom <code>padding</code> by the full height of the on-screen keyboard when it appears. In contrast, the <code>KeyboardAvoider</code> widget only insets its bottom <code>padding</code> by the actual amount obscured by the keyboard. This is especially useful when working with complex layouts on tablet devices.</p>
 <h2 id="auto-scroll">Auto Scroll</h2>
 <p>To auto-scroll to a focused widget such as a <code>TextField</code>, set the <code>autoScroll</code> property to <code>true</code>. If <code>child</code> is not a <code>ScrollView</code>, it is automatically embedded in a <code>SingleChildScrollView</code> to make it scrollable.</p>
       </section>
