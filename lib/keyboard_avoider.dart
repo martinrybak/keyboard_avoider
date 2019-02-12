@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 
-/// Wraps the [child] in a [AnimatedContainer] that adjusts its [padding] to accommodate the on-screen keyboard.
+/// Wraps the [child] in a [AnimatedContainer] that adjusts its bottom [padding] to accommodate the on-screen keyboard.
 /// Unlike a [Scaffold], it only insets by the actual amount obscured by the keyboard.
 /// If [autoScroll] is true and the [child] contains a focused widget such as a [TextField],
 /// automatically scrolls so that it is just visible above the keyboard, plus any additional [focusPadding].
