@@ -19,7 +19,7 @@ class KeyboardAvoider extends StatefulWidget {
   final Curve curve;
 
   /// Whether to auto-scroll to the focused widget after the keyboard appears. Defaults to false.
-  /// Could be expensive because it searches all the objects in this widget's render tree.
+  /// Could be expensive because it searches all the child objects in this widget's render tree.
   final bool autoScroll;
 
   /// Space to put between the focused widget and the top of the keyboard. Defaults to 12.
