@@ -39,8 +39,6 @@
     <ol>
           <li class="section-title">Libraries</li>
           <li><a href="keyboard_avoider/keyboard_avoider-library.html">keyboard_avoider</a></li>
-          <li><a href="keyboard_avoiding_container/keyboard_avoiding_container-library.html">keyboard_avoiding_container</a></li>
-          <li><a href="keyboard_avoiding_scrollview/keyboard_avoiding_scrollview-library.html">keyboard_avoiding_scrollview</a></li>
     </ol>
   </div>
 
@@ -52,20 +50,14 @@
       <h2>Classes</h2>
 
       <dl>
-        <dt id="KeyboardAvoidingContainer">
-          <span class="name "><a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html">KeyboardAvoidingContainer</a></span> 
+        <dt id="KeyboardAvoider">
+          <span class="name "><a href="keyboard_avoider/KeyboardAvoider-class.html">KeyboardAvoider</a></span> 
         </dt>
         <dd>
-          Wraps the <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/child.html">child</a> in a <code>AnimatedContainer</code> that adjusts its bottom <code>padding</code>
-to accommodate the on-screen keyboard. To disable the animation, set <a href="keyboard_avoiding_container/KeyboardAvoidingContainer/duration.html">duration</a> to <code>Duration.zero</code>.
-        </dd>
-        <dt id="KeyboardAvoidingScrollView">
-          <span class="name "><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView-class.html">KeyboardAvoidingScrollView</a></span> 
-        </dt>
-        <dd>
-          Embeds the <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/child.html">child</a> in a <code>SingleChildScrollView</code> wrapped with a <a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html">KeyboardAvoidingContainer</a>.
-If the <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/child.html">child</a> contains a focused widget such as a <code>TextField</code>, it will auto-scroll so that
-it is just visible above the keyboard, plus any additional <a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView/focusPadding.html">focusPadding</a>.
+          Wraps the <a href="keyboard_avoider/KeyboardAvoider/child.html">child</a> in a <code>AnimatedContainer</code> that adjusts its <code>padding</code> to accommodate the on-screen keyboard.
+Unlike a <code>Scaffold</code>, it only insets by the actual amount obscured by the keyboard.
+If <a href="keyboard_avoider/KeyboardAvoider/autoScroll.html">autoScroll</a> is true and the <a href="keyboard_avoider/KeyboardAvoider/child.html">child</a> contains a focused widget such as a <code>TextField</code>,
+automatically scrolls so that it is just visible above the keyboard, plus any additional <a href="keyboard_avoider/KeyboardAvoider/focusPadding.html">focusPadding</a>.
         </dd>
       </dl>
     </section>
@@ -83,8 +75,7 @@ it is just visible above the keyboard, plus any additional <a href="keyboard_avo
     <h5>keyboard_avoider library</h5>
     <ol>
       <li class="section-title"><a href="keyboard_avoider/keyboard_avoider-library.html#classes">Classes</a></li>
-      <li><a href="keyboard_avoiding_container/KeyboardAvoidingContainer-class.html">KeyboardAvoidingContainer</a></li>
-      <li><a href="keyboard_avoiding_scrollview/KeyboardAvoidingScrollView-class.html">KeyboardAvoidingScrollView</a></li>
+      <li><a href="keyboard_avoider/KeyboardAvoider-class.html">KeyboardAvoider</a></li>
     
     
     
