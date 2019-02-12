@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 
 /// Wraps the [child] in a [AnimatedContainer] that adjusts its [padding] to accommodate the on-screen keyboard.
 /// Unlike a [Scaffold], it only insets by the actual amount obscured by the keyboard.
-/// If [autoFocus] is true and the [child] contains a focused widget such as a [TextField],
+/// If [autoScroll] is true and the [child] contains a focused widget such as a [TextField],
 /// automatically scrolls so that it is just visible above the keyboard, plus any additional [focusPadding].
 class KeyboardAvoider extends StatefulWidget {
   /// The child to embed. If the [child] is not a [ScrollView], it is automatically embedded in a [SingleChildScrollView].
@@ -18,9 +18,9 @@ class KeyboardAvoider extends StatefulWidget {
   /// Animation curve. Defaults to [easeOut]
   final Curve curve;
 
-  /// Whether to auto-focus to the focused widget after the keyboard appears. Defaults to false.
+  /// Whether to auto-scroll to the focused widget after the keyboard appears. Defaults to false.
   /// Could be expensive because it searches all the objects in this widget's render tree.
-  final bool autoFocus;
+  final bool autoScroll;
 
   /// Space to put between the focused widget and the top of the keyboard. Defaults to 12.
   /// Useful in case the focused widget is inside a parent widget that you also want to be visible.
@@ -31,7 +31,7 @@ class KeyboardAvoider extends StatefulWidget {
     @required this.child,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeOut,
-    this.autoFocus = false,
+    this.autoScroll = false,
     this.focusPadding = 12.0,
   })  : assert(child is ScrollView ? child.controller != null : true),
         super(key: key);
@@ -81,7 +81,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
     // If [child] is not a [ScrollView], and [autoFocus] is true,
     // embed the [child] in a [SingleChildScrollView] to make
     // it possible to scroll to the focused widget.
-    if (widget.autoFocus) {
+    if (widget.autoScroll) {
       _scrollController = new ScrollController();
       return _buildAnimatedContainer(LayoutBuilder(
         builder: (context, constraints) {
@@ -169,7 +169,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
 
   void _keyboardShown() {
     // If auto focus is not enabled, do nothing
-    if (!widget.autoFocus) {
+    if (!widget.autoScroll) {
       return;
     }
     // Need to wait a frame to get the new size
