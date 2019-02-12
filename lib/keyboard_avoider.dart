@@ -78,7 +78,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
       return _buildAnimatedContainer(widget.child);
     }
 
-    // If [child] is not a [ScrollView], and [autoFocus] is true,
+    // If [child] is not a [ScrollView], and [autoScroll] is true,
     // embed the [child] in a [SingleChildScrollView] to make
     // it possible to scroll to the focused widget.
     if (widget.autoScroll) {
@@ -168,7 +168,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   }
 
   void _keyboardShown() {
-    // If auto focus is not enabled, do nothing
+    // If auto scroll is not enabled, do nothing
     if (!widget.autoScroll) {
       return;
     }
