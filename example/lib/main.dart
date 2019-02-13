@@ -4,6 +4,8 @@ import 'package:keyboard_avoider/keyboard_avoider.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         autoScroll: true,
         child: ListView.builder(
           padding: EdgeInsets.zero,
-          controller: ScrollController(),
+          controller: _scrollController,
           itemCount: rows,
           itemBuilder: (context, index) {
             return Material(
