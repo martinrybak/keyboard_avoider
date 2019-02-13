@@ -4,9 +4,11 @@ A lightweight alternative to the `Scaffold` widget for avoiding the on-screen so
 
 ![](keyboard_avoider.gif)
 
-In the video above, every colored area is embedded in its own `KeyboardAvoider`.
+In the video above, every colored area is wrapped in its own `KeyboardAvoider`.
 
-## Example
+## Examples
+
+A basic `Placeholder`:
 
 ```
 import 'package:keyboard_avoider/keyboard_avoider.dart';
@@ -20,6 +22,34 @@ class MyWidget extends StatelessWidget {
   }
 }
 ```
+
+A `ListView` containing multiple `TextFields`, with auto-scroll enabled:
+
+```
+import 'package:keyboard_avoider/keyboard_avoider.dart';
+
+class MyWidget extends StatelessWidget {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyboardAvoider(
+      autoScroll: true,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: 40,
+        itemBuilder: (context, index) {
+          return TextFormField(
+            initialValue: 'TextFormField ${index + 1}',
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+
 
 ## Why not use a Scaffold?
 
