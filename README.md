@@ -53,7 +53,12 @@ class MyWidget extends StatelessWidget {
 
 ## Why not use a Scaffold?
 
-The `Scaffold` widget expects to be a full-screen widget. If the `resizeToAvoidBottomPadding` property is set to `true` (which is the default), it will adjust its bottom `padding` by the full height of the on-screen keyboard when it appears. In contrast, the `KeyboardAvoider` widget only insets its bottom `padding` by the actual amount obscured by the keyboard. This is especially useful when working with complex layouts on tablet devices.
+Flutter comes with a built-in `Scaffold` widget that automatically adjusts the bottom padding of its body widget to accomodate the on-screen keyboard. However, it comes with 2 major caveats:
+ 
+1. It pushes all content up, which you may not want.
+1. It assumes that it fills the whole screen, which it may not.
+
+In contrast, you can apply the `KeyboardAvoider` selectively to only certain widgets, and it only insets its bottom `padding` by the actual amount obscured by the keyboard.
 
 ## Auto Scroll
 
