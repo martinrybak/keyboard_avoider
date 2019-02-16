@@ -54,7 +54,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _animationKey.currentState.animation.removeStatusListener(_animationListener);
+    _animationKey.currentState?.animation?.removeStatusListener(_animationListener);
     super.dispose();
   }
 
