@@ -135,6 +135,10 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   }
 
   void _resize() {
+    if (context == null) {
+      return;
+    }
+
     // Calculate Rect of widget on screen
     final object = context.findRenderObject();
     final box = object as RenderBox;
@@ -178,6 +182,10 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   }
 
   void _scrollToFocusedObject() {
+    if (context == null) {
+      return;
+    }
+
     final focused = _findFocusedObject(context.findRenderObject());
     if (focused != null) {
       _scrollToObject(focused);
