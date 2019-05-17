@@ -48,6 +48,7 @@ class BottomAreaAvoider extends StatefulWidget {
     this.curve = defaultCurve,
     this.overscroll = defaultOverscroll,
   })  : assert(child is ScrollView ? child.controller != null : true),
+        assert(areaToAvoid >= 0, 'Cannot avoid a negative area'),
         super(key: key);
 
   BottomAreaAvoiderState createState() => BottomAreaAvoiderState();
