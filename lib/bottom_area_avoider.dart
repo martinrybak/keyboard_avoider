@@ -114,7 +114,6 @@ class BottomAreaAvoiderState extends State<BottomAreaAvoider> {
   }
 
   Widget _buildAnimatedContainer(Widget child) {
-    debugPrint('buildAnimatedContainer w ${widget.areaToAvoid}');
     return AnimatedContainer(
       key: _animationKey,
       padding: EdgeInsets.only(bottom: widget.areaToAvoid),
