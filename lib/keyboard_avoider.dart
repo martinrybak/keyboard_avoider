@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:collection';
 import 'package:flutter/widgets.dart';
@@ -102,14 +103,46 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   }
 
   /// WidgetsBindingObserver
+  Timer _appLifecycleTimer;
+  AppLifecycleState _lifecycleState = AppLifecycleState.resumed;
+  bool _isResizeScheduled = false;
 
   @override
   void didChangeMetrics() {
+    if (_lifecycleState != AppLifecycleState.resumed) {
+      _isResizeScheduled = true;
+      return;
+    }
+    _isResizeScheduled = false;
+
+    // rare case: there might be no frames scheduled
+    // if this is called from didChangeAppLifecycleState
+    WidgetsBinding.instance.scheduleFrame();
     //Need to wait a frame to get the new size
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _resize();
     });
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _appLifecycleTimer?.cancel();
+    if (_lifecycleState != AppLifecycleState.resumed &&
+        state == AppLifecycleState.resumed) {
+      final prevState = _lifecycleState;
+      _appLifecycleTimer = Timer(Duration(milliseconds: 300), () {
+        if (prevState == _lifecycleState) {
+          _lifecycleState = state;
+        }
+        if (_isResizeScheduled) {
+          didChangeMetrics();
+        }
+      });
+    } else {
+      _lifecycleState = state;
+    }
+  }
+
 
   /// AnimationStatus
 
