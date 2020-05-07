@@ -107,6 +107,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
 
   /// WidgetsBindingObserver
 
+  /// Called after didChangeAppLifecycleState()
   @override
   void didChangeMetrics() {
     /// Window metrics changed due to user interaction with app.
@@ -127,6 +128,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
     }
   }
 
+  /// Called before didChangeMetrics()
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _appLifecycleState = state;
@@ -156,7 +158,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   }
 
   void _resize() {
-    if (context == null) {
+    if (!this.mounted) {
       return;
     }
 
