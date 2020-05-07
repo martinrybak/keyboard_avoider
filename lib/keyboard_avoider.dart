@@ -36,11 +36,12 @@ class KeyboardAvoider extends StatefulWidget {
   })  : assert(child is ScrollView ? child.controller != null : true),
         super(key: key);
 
+  @override
   _KeyboardAvoiderState createState() => _KeyboardAvoiderState();
 }
 
 class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingObserver {
-  final _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
+  final _animationKey = GlobalKey<ImplicitlyAnimatedWidgetState>();
   Function(AnimationStatus) _animationListener;
   ScrollController _scrollController;
   double _overlap = 0.0;
@@ -81,7 +82,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
     // embed the [child] in a [SingleChildScrollView] to make
     // it possible to scroll to the focused widget.
     if (widget.autoScroll) {
-      _scrollController = new ScrollController();
+      _scrollController = ScrollController();
       return _buildAnimatedContainer(LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -210,7 +211,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
 
   /// If the focused object is covered by the keyboard, scroll to it.
   /// Otherwise do nothing.
-  _scrollToObject(RenderObject object) {
+  void _scrollToObject(RenderObject object) {
     // Calculate the offset needed to show the object in the [ScrollView]
     // so that its bottom touches the top of the keyboard.
     final viewport = RenderAbstractViewport.of(object);
