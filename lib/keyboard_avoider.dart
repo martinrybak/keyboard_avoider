@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'dart:math';
 import 'dart:collection';
 import 'package:flutter/widgets.dart';
@@ -107,14 +108,9 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   @override
   void didChangeMetrics() {
     //Ignore metrics changes that happen while app is not in the foreground
-    if (_appLifecycleState != null && _appLifecycleState != AppLifecycleState.resumed) {
-      return;
-    }
-
-    //Need to wait a frame to get the new size
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (_appLifecycleState == null || _appLifecycleState == AppLifecycleState.resumed) {
       _resize();
-    });
+    }
   }
 
   @override
@@ -162,10 +158,9 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
     );
 
     // Calculate top of keyboard
-    final mediaQuery = MediaQuery.of(context);
-    final screenSize = mediaQuery.size;
-    final screenInsets = mediaQuery.viewInsets;
-    final keyboardTop = screenSize.height - screenInsets.bottom;
+    final screenSize = ui.window.physicalSize / ui.window.devicePixelRatio;
+    final bottomInset = ui.window.viewInsets.bottom / ui.window.devicePixelRatio;
+    final keyboardTop = screenSize.height - bottomInset;
 
     // If widget is entirely covered by keyboard, do nothing
     if (widgetRect.top > keyboardTop) {
