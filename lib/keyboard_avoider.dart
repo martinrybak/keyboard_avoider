@@ -43,6 +43,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   final _animationKey = new GlobalKey<ImplicitlyAnimatedWidgetState>();
   Function(AnimationStatus) _animationListener;
   ScrollController _scrollController;
+  AppLifecycleState _appLifecycleState;
   double _overlap = 0.0;
 
   @override
@@ -105,10 +106,20 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
 
   @override
   void didChangeMetrics() {
+    //Ignore metrics changes that happen while app is not in the foreground
+    if (_appLifecycleState != null && _appLifecycleState != AppLifecycleState.resumed) {
+      return;
+    }
+
     //Need to wait a frame to get the new size
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _resize();
     });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _appLifecycleState = state;
   }
 
   /// AnimationStatus
