@@ -1,6 +1,7 @@
-import 'dart:ui' as ui;
-import 'dart:math';
+import 'dart:async';
 import 'dart:collection';
+import 'dart:math';
+import 'dart:ui' as ui;
 import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 
@@ -46,6 +47,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   ScrollController _scrollController;
   AppLifecycleState _appLifecycleState;
   double _overlap = 0.0;
+  var _debouncer = Debouncer(delay: Duration(milliseconds: 100));
 
   @override
   void initState() {
@@ -107,9 +109,21 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
 
   @override
   void didChangeMetrics() {
-    //Ignore metrics changes that happen while app is not in the foreground
-    if (_appLifecycleState == null || _appLifecycleState == AppLifecycleState.resumed) {
+    /// Window metrics changed due to user interaction with app.
+    /// Handle normally.
+    if (_appLifecycleState == null) {
       _resize();
+      return;
+    }
+
+    /// Window metrics changed due to app entering foreground.
+    /// Debounce to prevent same blink effect that affects [Scaffold]:
+    /// https://github.com/flutter/flutter/issues/53565
+    if (_appLifecycleState == AppLifecycleState.resumed) {
+      _debouncer.run((){
+        _resize();
+        _appLifecycleState = null;
+      });
     }
   }
 
@@ -231,5 +245,20 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
         curve: widget.curve,
       );
     }
+  }
+}
+
+class Debouncer {
+  final Duration delay;
+  Timer _timer;
+  Debouncer({ this.delay });
+
+  void run(VoidCallback action) {
+    if (this.delay == null) {
+      action();
+      return;
+    }
+    _timer?.cancel();
+    _timer = Timer(this.delay, action);
   }
 }
