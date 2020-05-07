@@ -256,10 +256,6 @@ class Debouncer {
   Debouncer({ this.delay });
 
   void run(VoidCallback action) {
-    if (this.delay == null) {
-      action();
-      return;
-    }
     _timer?.cancel();
     _timer = Timer(this.delay, action);
   }
