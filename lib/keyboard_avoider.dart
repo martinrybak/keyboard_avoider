@@ -1,7 +1,8 @@
-import 'dart:math';
 import 'dart:collection';
-import 'package:flutter/widgets.dart';
+import 'dart:math';
+
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 /// Wraps the [child] in a [AnimatedContainer] that adjusts its bottom [padding] to accommodate the on-screen keyboard.
 /// Unlike a [Scaffold], it only insets by the actual amount obscured by the keyboard.
@@ -27,8 +28,8 @@ class KeyboardAvoider extends StatefulWidget {
   final double focusPadding;
 
   KeyboardAvoider({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.duration = const Duration(milliseconds: 100),
     this.curve = Curves.easeOut,
     this.autoScroll = false,
@@ -42,20 +43,22 @@ class KeyboardAvoider extends StatefulWidget {
 
 class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingObserver {
   final _animationKey = GlobalKey<ImplicitlyAnimatedWidgetState>();
-  Function(AnimationStatus) _animationListener;
-  ScrollController _scrollController;
+  Function(AnimationStatus)? _animationListener;
+  ScrollController? _scrollController;
   double _overlap = 0.0;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _animationKey.currentState?.animation?.removeStatusListener(_animationListener);
+    WidgetsBinding.instance?.removeObserver(this);
+    if (_animationListener != null) {
+      _animationKey.currentState?.animation.removeStatusListener(_animationListener!);
+    }
     super.dispose();
   }
 
@@ -64,9 +67,9 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
     // Add a status listener to the animation after the initial build.
     // Wait a frame so that _animationKey.currentState is not null.
     if (_animationListener == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
         _animationListener = _animationStatusChanged;
-        _animationKey.currentState.animation.addStatusListener(_animationListener);
+        _animationKey.currentState?.animation.addStatusListener(_animationListener!);
       });
     }
 
@@ -107,7 +110,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   @override
   void didChangeMetrics() {
     //Need to wait a frame to get the new size
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       _resize();
     });
   }
@@ -177,7 +180,7 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
       return;
     }
     // Need to wait a frame to get the new size
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       _scrollToFocusedObject();
     });
   }
@@ -194,7 +197,9 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
   }
 
   /// Finds the first focused [RenderEditable] child of [root] using a breadth-first search.
-  RenderObject _findFocusedObject(RenderObject root) {
+  RenderObject? _findFocusedObject(RenderObject? root) {
+    if (root == null) return null;
+
     final q = Queue<RenderObject>();
     q.add(root);
     while (q.isNotEmpty) {
@@ -215,12 +220,16 @@ class _KeyboardAvoiderState extends State<KeyboardAvoider> with WidgetsBindingOb
     // Calculate the offset needed to show the object in the [ScrollView]
     // so that its bottom touches the top of the keyboard.
     final viewport = RenderAbstractViewport.of(object);
+
+    if (viewport == null) return;
+
     final offset = viewport.getOffsetToReveal(object, 1.0).offset + widget.focusPadding;
 
+    if (_scrollController == null) return;
     // If the object is covered by the keyboard, scroll to reveal it,
     // and add [focusPadding] between it and top of the keyboard.
-    if (offset > _scrollController.position.pixels) {
-      _scrollController.position.moveTo(
+    if (offset > _scrollController!.position.pixels) {
+      _scrollController!.position.moveTo(
         offset,
         duration: widget.duration,
         curve: widget.curve,
